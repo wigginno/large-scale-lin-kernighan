@@ -8,11 +8,10 @@ TSP heuristic solver designed to be used on very large-scale instances like Gala
 
 **Completed**
 - Prototype initial tour generation using k-means clustering, runs in  O(nlogn), linear space
-- Prototype Delaunay triangulation (for candidate set generation) using randomized incremental insertion, runs in O(nlogn), linear space
+- Prototype Delaunay triangulation (for candidate set generation) using randomized incremental insertion, runs in expected O(nlogn) time, linear space
 - Tested initial tour generation and Delaunay triangulation on 100 million city problem
 
 **In-progress**
-- Update readme, add current usage for generating initial tours and triangulations
 - Transform partitions of geospatial positions to Cartesian coordinates
 - Implement splay tree data structure to represent tour[^2]
 - Proper source code organization - header files for declarations and cpp files for implementation
