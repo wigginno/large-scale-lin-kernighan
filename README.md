@@ -12,9 +12,36 @@ TSP heuristic solver designed to be used on very large-scale instances like Gala
 - Tested initial tour generation and Delaunay triangulation on 100 million city problem
 
 **In-progress**
-- Partition scheme for n > 100 million cities
+- Update readme, add current usage for generating initial tours and triangulations
 - Transform partitions of geospatial positions to Cartesian coordinates
-- Splay tree data structure to represent tour[^2]
+- Implement splay tree data structure to represent tour[^2]
+- Proper source code organization - header files for declarations and cpp files for implementation
+- Documentation
+
+## Setup
+
+```zsh
+git clone https://github.com/wigginno/large-scale-lin-kernighan.git
+cd large-scale-lin-kernighan
+make release
+```
+
+## Usage
+
+### Problem file generation
+```zsh
+./gen_tsp [n] [output_file]
+```
+
+### Initial tour generation
+```zsh
+./kmeans_tsp [problem file]
+```
+
+### Delaunay triangulation
+```zsh
+./delaunay [problem file]
+```
 
 [^1]: Drori, I., Kates, B., Sickinger, W., Kharkar, A., Dietrich, B., Shporer, A., & Udell, M. (2020). GalaxyTSP: A New Billion-Node Benchmark for TSP. 1st Workshop on Learning Meets Combinatorial Algorithms @ NeurIPS 2020, Vancouver, Canada. Retrieved from [https://www.cs.columbia.edu/~idrori/galaxytsp.pdf](https://www.cs.columbia.edu/~idrori/galaxytsp.pdf)
 
