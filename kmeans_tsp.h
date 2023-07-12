@@ -147,9 +147,9 @@ struct Problem {
     Problem(const std::string& problem_filename, const std::string& solution_filename)
     : _problem_filename(problem_filename), _solution_filename(solution_filename) {
         std::ifstream file(_problem_filename);
-        id_t n;
-        file >> n;
+        _read_first_city_id(file);
 
+        id_t n = _read_header(file);
         _cities.reserve(n);
         _city_ids.reserve(n);
 
@@ -158,42 +158,43 @@ struct Problem {
         double _min_y = std::numeric_limits<double>::max();
         double _max_y = std::numeric_limits<double>::min();
 
-        // First pass to validate city ids and get range of coordinates for normalization
-        for (id_t i = 0; i < n; ++i) {
+        std::string line;
+        // First pass to get range of coordinates for normalization
+        while (std::getline(file, line)) {
+            std::istringstream is(line);
             id_t city_id;
             double x, y;
-            file >> city_id >> x >> y;
 
-            // Cities should be numbered 0, 1, 2, ..., n - 1
-            assert(city_id == i);
-
-            // Update min and max x and y
-            _min_x = std::min(_min_x, x);
-            _max_x = std::max(_max_x, x);
-            _min_y = std::min(_min_y, y);
-            _max_y = std::max(_max_y, y);
+            if (is >> city_id >> x >> y) {
+                // Update min and max x and y
+                _min_x = std::min(_min_x, x);
+                _max_x = std::max(_max_x, x);
+                _min_y = std::min(_min_y, y);
+                _max_y = std::max(_max_y, y);
+            }
         }
 
         file.clear();
         file.seekg(0, std::ios::beg);
-        file >> n;
+        _skip_header(file);
 
-        double x_range = (_max_x - _min_x);
-        double y_range = (_max_y - _min_y);
-        _scale = std::max(x_range, y_range) * 2.;
+        double x_range = _max_x - _min_x;
+        double y_range = _max_y - _min_y;
+        _scale = std::max(x_range, y_range);
 
         // Second pass to store city ids and normalized coordinates
-        for (id_t i = 0; i < n; ++i) {
+        while (std::getline(file, line)) {
+            std::istringstream is(line);
             id_t city_id;
             double x, y;
-            file >> city_id >> x >> y;
 
-            _city_ids.push_back(city_id);
-
-            // Normalize coordinates to range [-1., 1.]
-            float x_norm = static_cast<float>((x - _min_x) / _scale - 1.);
-            float y_norm = static_cast<float>((y - _min_y) / _scale - 1.);
-            _cities.emplace_back(x_norm, y_norm);
+            if (is >> city_id >> x >> y) {
+                _city_ids.push_back(city_id - _first_city_id);
+                // Normalize coordinates to range [-1., 1.]
+                float x_norm = static_cast<float>(((x - _min_x) / _scale) * 2 - 1);
+                float y_norm = static_cast<float>(((y - _min_y) / _scale) * 2 - 1);
+                _cities.emplace_back(x_norm, y_norm);
+            }
         }
 
         file.close();
@@ -229,7 +230,7 @@ struct Problem {
     }
 
     double denormalize(float coord) {
-        return (coord + 1.) * _scale;
+        return (coord + 1.) / 2 * _scale;
     }
 
     double compute_tour_weight(const std::vector<id_t>& tour) {
@@ -309,6 +310,55 @@ struct Problem {
     PointArray _cities;
     std::vector<id_t> _city_ids;
     double _scale;
+    id_t _first_city_id;
+
+    id_t _read_header(std::ifstream& file) {
+        std::string line;
+        id_t n = 0;
+        while (std::getline(file, line)) {
+            std::string temp;
+            std::istringstream is(line);
+            if (is >> temp && (temp == "DIMENSION" || temp == "dimension"
+                               || temp == "DIMENSION:" || temp == "dimension:")) {
+                if (is.peek() == ':') {
+                    is.ignore();  // ignore the colon
+                }
+                if (is >> n) {
+                    // Successfully read the number of cities
+                } else {
+                    throw std::runtime_error("Invalid DIMENSION line in file");
+                }
+            }
+            if (line == "NODE_COORD_SECTION") {
+                break;
+            }
+        }
+        return n;
+    }
+
+    void _skip_header(std::ifstream& file) {
+        std::string line;
+        while (std::getline(file, line)) {
+            if (line == "NODE_COORD_SECTION") {
+                break;
+            }
+        }
+    }
+
+    void _reset_file(std::ifstream& file) {
+        file.clear();
+        file.seekg(0, std::ios::beg);
+    }
+
+    // Read first city id from file and go back to the beginning of the file.
+    void _read_first_city_id(std::ifstream& file) {
+        _skip_header(file);
+        std::string line;
+        std::getline(file, line);
+        std::istringstream is(line);
+        is >> _first_city_id;
+        _reset_file(file);
+    }
 };
 
 class City {
