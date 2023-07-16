@@ -1,3 +1,5 @@
+#include <immintrin.h>
+
 // Normalize a 32-bit unsigned integer to a floating point number in the range [-1.0, 1.0).
 inline float norm(uint32_t value) {
     return static_cast<double>(value) / 2147483647 - 1.0;
