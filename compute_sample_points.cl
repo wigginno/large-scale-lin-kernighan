@@ -42,7 +42,7 @@ __kernel void compute_sample_points(__global float2* origins,
     // Compute Morton codes
     ulong16 out = interleave(x, y);
 
-    // To make things easier for CPU, sort Morton codes using a bubble sort
+    // Sort Morton codes to make things easier for CPU.
     ulong8 tmp0, tmp1;
     tmp0 = min(out.even, out.odd);
     tmp1 = max(out.even, out.odd);
