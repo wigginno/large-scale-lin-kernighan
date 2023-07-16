@@ -28,21 +28,22 @@ inline ulong16 interleave(ulong16 x, ulong16 y) {
 }
 
 __kernel void compute_sample_points(__global float2* origins,
-                                    __global float* distance,
+                                    __global uint* scaled_distances,
                                     __global ulong16* output) {
     int gid = get_global_id(0);
 
     // Scale origin to range of 32-bit integer
+    // Convert origins to double2
     uint2 origin_scaled = convert_uint2_sat_rte((convert_double2(origins[gid]) + 1.0) * 2147483647);
 
     // Convert polar to cartesian coordinates and interleave x and y
-    ulong16 x = clamp(convert_ulong16(round(cos_theta * distance[gid] + origin_scaled.x)), 0, 4294967295);
-    ulong16 y = clamp(convert_ulong16(round(sin_theta * distance[gid] + origin_scaled.y)), 0, 4294967295);
+    ulong16 x = clamp(convert_ulong16(round(cos_theta * scaled_distances[gid] + origin_scaled.x)), 0, 4294967295);
+    ulong16 y = clamp(convert_ulong16(round(sin_theta * scaled_distances[gid] + origin_scaled.y)), 0, 4294967295);
 
     // Compute Morton codes
     ulong16 out = interleave(x, y);
 
-    // Sort Morton codes to make things easier for CPU.
+    // To make things easier for CPU, sort Morton codes using a bubble sort
     ulong8 tmp0, tmp1;
     tmp0 = min(out.even, out.odd);
     tmp1 = max(out.even, out.odd);
