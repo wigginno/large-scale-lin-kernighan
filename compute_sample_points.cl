@@ -33,7 +33,6 @@ __kernel void compute_sample_points(__global float2* origins,
     int gid = get_global_id(0);
 
     // Scale origin to range of 32-bit integer
-    // Convert origins to double2
     uint2 origin_scaled = convert_uint2_sat_rte((convert_double2(origins[gid]) + 1.0) * 2147483647);
 
     // Convert polar to cartesian coordinates and interleave x and y
