@@ -15,7 +15,7 @@ TSP heuristic solver designed to be used on very large-scale instances like Gala
 - Transform partitions of geospatial positions to Cartesian coordinates
 - Implement splay tree data structure to represent tour[^2]
 - Proper source code organization - header files for declarations and cpp files for implementation
-- Documentation
+- Reimplement Delaunay triangulation w/ streaming technique to generate 1bn+ triangle meshes with low memory footprint
 
 ## Setup
 
