@@ -2,13 +2,13 @@
 
 ## Project description
 
-TSP heuristic solver designed to be used on very large-scale instances like GalaxyTSP[^1] using geometric methods and local search.
+A TSP heuristic solver designed for large-scale instances such as GalaxyTSP[^1], using geometric methods and local search.
 
 ## Progress
 
 **Completed**
-- Prototype initial tour generation using k-means clustering, runs in  O(nlogn), linear space
-- Prototype Delaunay triangulation (for candidate set generation) using randomized incremental insertion, runs in expected O(nlogn) time, linear space
+- Prototype initial tour generation using k-means clustering
+- Prototype Delaunay triangulation (for candidate set generation) using randomized incremental insertion
 - Tested initial tour generation and Delaunay triangulation on 100 million city problem
 
 **In-progress**
@@ -41,6 +41,14 @@ make release
 ```zsh
 ./delaunay [problem file]
 ```
+
+### Algorithmic efficiency
+#### Initial tour generation based on k-means clustering
+O(nlogn) time, O(n) space
+#### Candidate set generation based on Delaunay triangulation (post-processed to limit number of candidates per point)
+O(nlogn) time and O(n) space
+#### Modified Lin-Kernighan given preset number of iterations and max candidates per point, Splay tree for tour operations (planned)
+O(nlogn) expected time, O(n) space
 
 [^1]: Drori, I., Kates, B., Sickinger, W., Kharkar, A., Dietrich, B., Shporer, A., & Udell, M. (2020). GalaxyTSP: A New Billion-Node Benchmark for TSP. 1st Workshop on Learning Meets Combinatorial Algorithms @ NeurIPS 2020, Vancouver, Canada. Retrieved from [https://www.cs.columbia.edu/~idrori/galaxytsp.pdf](https://www.cs.columbia.edu/~idrori/galaxytsp.pdf)
 
