@@ -45,7 +45,7 @@ make release
 ### Algorithmic efficiency notes (in progress)
 #### Initial tour generation
 Runs in O(nlogn) time and O(n) space.
-#### Generating next city candidates for tour improvement (based on post-processed Delaunay triangulation)
+#### Generating next city candidates for tour improvement (Delaunay triangulation and post-processing)
 Runs in O(nlogn) time and O(n) space.
 #### Tour improvement (local search heuristic, preset number of iterations)
 O(nlogn) expected time and O(n) space.
