@@ -42,13 +42,16 @@ make release
 ./delaunay [problem file]
 ```
 
-### Algorithmic efficiency
-#### Initial tour generation based on k-means clustering
-O(nlogn) time, O(n) space
-#### Candidate set generation based on Delaunay triangulation (post-processed to limit number of candidates per point)
-O(nlogn) time and O(n) space
-#### Modified Lin-Kernighan given preset number of iterations and max candidates per point, Splay tree for tour operations (planned)
-O(nlogn) expected time, O(n) space
+### Algorithmic efficiency notes (in progress)
+#### Initial tour generation
+Runs in O(nlogn) time and O(n) space.
+#### Generating next city candidates for tour improvement (based on post-processed Delaunay triangulation)
+Runs in O(nlogn) time and O(n) space.
+#### Tour improvement (local search heuristic, preset number of iterations)
+O(nlogn) expected time and O(n) space.
+
+### Experimental results
+in progress...
 
 [^1]: Drori, I., Kates, B., Sickinger, W., Kharkar, A., Dietrich, B., Shporer, A., & Udell, M. (2020). GalaxyTSP: A New Billion-Node Benchmark for TSP. 1st Workshop on Learning Meets Combinatorial Algorithms @ NeurIPS 2020, Vancouver, Canada. Retrieved from [https://www.cs.columbia.edu/~idrori/galaxytsp.pdf](https://www.cs.columbia.edu/~idrori/galaxytsp.pdf)
 
