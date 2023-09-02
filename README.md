@@ -12,10 +12,10 @@ A TSP heuristic solver designed for large-scale instances such as GalaxyTSP[^1],
 - Tested initial tour generation and Delaunay triangulation on 100 million city problem
 
 **In-progress**
-- Transform partitions of geospatial positions to Cartesian coordinates
+- Scrap current Delaunay triangulation code and use [CGAL](https://doc.cgal.org/5.3/Triangulation_on_sphere_2/index.html#Chapter_2D_Triangulations_on_sphere) instead.
 - Implement splay tree data structure to represent tour[^2]
-- Proper source code organization - header files for declarations and cpp files for implementation
-- Reimplement Delaunay triangulation w/ streaming technique to generate 1bn+ triangle meshes with low memory footprint
+- Fix source code organization - header files for declarations and cpp files for implementation
+- Implement full candidate generation pipeline
 
 ## Setup
 
