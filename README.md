@@ -2,56 +2,17 @@
 
 ## Project description
 
-A TSP heuristic solver designed for large-scale instances such as GalaxyTSP[^1], using geometric methods and local search.
+A TSP heuristic solver designed for large-scale instances such as GalaxyTSP[^1].
 
 ## Progress
 
 **Completed**
-- Prototype initial tour generation using k-means clustering
-- Prototype Delaunay triangulation (for candidate set generation) using randomized incremental insertion
-- Tested initial tour generation and Delaunay triangulation on 100 million city problem
+- 
 
 **In-progress**
-- Scrap current Delaunay triangulation code and use [CGAL](https://doc.cgal.org/5.3/Triangulation_on_sphere_2/index.html#Chapter_2D_Triangulations_on_sphere) instead.
 - Implement splay tree data structure to represent tour[^2]
-- Fix source code organization - header files for declarations and cpp files for implementation
-- Implement full candidate generation pipeline
-
-## Setup
-
-```zsh
-git clone https://github.com/wigginno/large-scale-lin-kernighan.git
-cd large-scale-lin-kernighan
-make release
-```
-
-## Usage
-
-### Problem file generation
-```zsh
-./gen_tsp [n] [output_file]
-```
-
-### Initial tour generation
-```zsh
-./kmeans_tsp [problem file]
-```
-
-### Delaunay triangulation
-```zsh
-./delaunay [problem file]
-```
-
-## Algorithmic efficiency notes (in progress)
-#### Initial tour generation
-Runs in O(nlogn) time and O(n) space.
-#### Generating next city candidates for tour improvement (Delaunay triangulation and post-processing)
-Runs in O(nlogn) time and O(n) space.
-#### Tour improvement (local search heuristic, preset number of iterations)
-O(nlogn) expected time and O(n) space.
-
-## Experimental results
-in progress...
+- Implement candidate set generation
+- Implement initial tour generation
 
 [^1]: Drori, I., Kates, B., Sickinger, W., Kharkar, A., Dietrich, B., Shporer, A., & Udell, M. (2020). GalaxyTSP: A New Billion-Node Benchmark for TSP. 1st Workshop on Learning Meets Combinatorial Algorithms @ NeurIPS 2020, Vancouver, Canada. Retrieved from [https://www.cs.columbia.edu/~idrori/galaxytsp.pdf](https://www.cs.columbia.edu/~idrori/galaxytsp.pdf)
 
