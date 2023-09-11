@@ -7,10 +7,11 @@ A TSP heuristic solver designed for large-scale instances such as GalaxyTSP[^1].
 ## Progress
 
 **Completed**
-- 
+- [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/wigginno/large-scale-lin-kernighan/blob/main/toy_lkh.ipynb)
+ Interactive proof of concept for the LKH algorithm: improves tours to around 2% of optimal for small problems (up to 3,000 cities) **in milliseconds**. Note that an array based data structure will not be used in the real implementation, as it does not scale well for large problems.
 
 **In-progress**
-- Implement splay tree data structure to represent tour[^2]
+- Implement splay tree data structure to represent tour[^2], achieve logarithmic amortized complexity for tour update and lookup.
 - Implement candidate set generation
 - Implement initial tour generation
 
