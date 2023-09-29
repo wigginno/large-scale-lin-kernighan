@@ -6,6 +6,11 @@ pros:
 cons:
 - tricky to parallelize effectively
 - ~5x slower than divide-and-conquer algorithms
+
+compile:
+g++ -O3 -march=native -std=c++17 -o delaunay delaunay.cpp
+debug:
+g++ -g -std=c++17 -o delaunay delaunay.cpp
 */
 
 #include <algorithm>
@@ -762,10 +767,3 @@ int main(int argc, char** argv) {
 
     return EXIT_SUCCESS;
 }
-
-// compile with:
-// g++ -O3 -march=native -std=c++11 -o delaunay delaunay.cpp
-// for debugging:
-// g++ -g -O0 -march=native -std=c++11 -o delaunay delaunay.cpp
-// for debugging + with warnings:
-// g++ -g -O0 -march=native -std=c++11 -Wall -Wextra -o delaunay delaunay.cpp
