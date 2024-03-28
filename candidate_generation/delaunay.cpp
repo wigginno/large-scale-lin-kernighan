@@ -1,6 +1,4 @@
 /*
-disclaimer: this is an unreadable mess written as a prototype
-
 pros:
 - faster than other serial insertion algorithms (~5 seconds for 1M points)
 - easy to adapt for solving massive point sets using streaming/out-of-core/partitioning techniques
